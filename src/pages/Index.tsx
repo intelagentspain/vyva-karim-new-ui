@@ -123,26 +123,26 @@ const Index = () => {
     <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
       {/* Header with logo and image */}
       <div className="w-full flex justify-between items-start mb-6">
-        <img src="/lovable-uploads/8857d91b-c600-4c5a-b1cf-a105eaf9905a.png" alt="Diputación de Zamora" className="h-16" />
-        <img src="/logo.png" alt="Logo" className="h-16" />
+        <img src="/lovable-uploads/8857d91b-c600-4c5a-b1cf-a105eaf9905a.png" alt="Diputación de Zamora" className="h-16 object-contain" />
+        <img src="/lovable-uploads/5d56e02d-e530-46ec-8f53-f13aa6cd6114.png" alt="VYVA" className="h-16 object-contain" />
       </div>
       
-      <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6">
+      <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-6">
         {/* Welcome heading and call button in 70-30 layout */}
-        <div className="flex items-center mb-8 w-full">
-          <div className="w-[70%] text-center text-white">
+        <div className="flex flex-col md:flex-row items-center mb-8 w-full">
+          <div className="w-full md:w-[70%] text-center text-white mb-4 md:mb-0">
             <h1 className="text-2xl font-bold">¡Hola!</h1>
             <p className="text-xl">¿Cómo puedo ayudarte hoy?</p>
           </div>
-          <div className="w-[30%] pl-4">
+          <div className="w-full md:w-[30%] md:pl-4">
             <Button 
-              className={`w-full border-2 border-white text-white py-4 rounded-lg text-lg font-medium flex items-center justify-center
+              className={`w-full border-2 border-white text-white py-4 px-2 rounded-lg text-lg font-medium flex items-center justify-center
                 ${sessionStarted ? 'bg-red-500 hover:bg-red-600' : 'bg-[#F5AA1F] hover:bg-[#e09d1d]'}`}
               onClick={toggleConversation}
               disabled={conversation.status === "connecting"}
             >
               <Phone className="mr-2" />
-              {conversation.status === "connecting" ? "Conectando..." : sessionStarted ? "Colgar" : "Iniciar llamada"}
+              <span className="whitespace-nowrap">{conversation.status === "connecting" ? "Conectando..." : sessionStarted ? "Colgar" : "Iniciar llamada"}</span>
             </Button>
           </div>
         </div>
@@ -167,18 +167,18 @@ const Index = () => {
         )}
         
         {/* Action buttons - 2x2 grid */}
-        <div className="grid grid-cols-2 gap-4 w-full">
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
-            Controlar mis síntomas
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
+            <span className="text-sm sm:text-base">Controlar mis síntomas</span>
           </Button>
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
-            Consulte a un médico ahora
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
+            <span className="text-sm sm:text-base">Consulte a un médico ahora</span>
           </Button>
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
-            Revise mis signos vitales
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
+            <span className="text-sm sm:text-base">Revise mis signos vitales</span>
           </Button>
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
-            Juega un juego mental
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
+            <span className="text-sm sm:text-base">Juega un juego mental</span>
           </Button>
         </div>
         
@@ -202,7 +202,7 @@ const Index = () => {
         
         {/* Bottom image */}
         <div className="w-full flex justify-center mt-6">
-          <img src="/placeholder.svg" alt="Bottom Image" className="h-24" />
+          <img src="/lovable-uploads/5d56e02d-e530-46ec-8f53-f13aa6cd6114.png" alt="Powered by VYVA" className="h-24 object-contain" />
         </div>
       </div>
     </div>
