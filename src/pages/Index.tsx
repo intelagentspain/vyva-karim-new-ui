@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -160,26 +161,26 @@ const Index = () => {
         <img src="/logo.png" alt="Logo" className="h-16" />
       </div>
       
-      {/* Welcome heading and call button in 70-30 layout */}
-      <div className="flex items-center mb-8">
-        <div className="w-[70%] text-center text-white">
-          <h1 className="text-2xl font-bold">¡Hola!</h1>
-          <p className="text-xl">¿Cómo puedo ayudarte hoy?</p>
-        </div>
-        <div className="w-[30%] pl-4">
-          <Button 
-            className={`w-full border-2 border-white text-white py-4 rounded-lg text-lg font-medium flex items-center justify-center
-              ${isConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-[#F5AA1F] hover:bg-[#e09d1d]'}`}
-            onClick={isConnected ? disconnectFromAgent : connectToAgent}
-            disabled={isConnecting}
-          >
-            <Phone className="mr-2" />
-            {isConnecting ? "Conectando..." : isConnected ? "Colgar" : "Iniciar llamada"}
-          </Button>
-        </div>
-      </div>
-      
       <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6">
+        {/* Welcome heading and call button in 70-30 layout */}
+        <div className="flex items-center mb-8 w-full">
+          <div className="w-[70%] text-center text-white">
+            <h1 className="text-2xl font-bold">¡Hola!</h1>
+            <p className="text-xl">¿Cómo puedo ayudarte hoy?</p>
+          </div>
+          <div className="w-[30%] pl-4">
+            <Button 
+              className={`w-full border-2 border-white text-white py-4 rounded-lg text-lg font-medium flex items-center justify-center
+                ${isConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-[#F5AA1F] hover:bg-[#e09d1d]'}`}
+              onClick={isConnected ? disconnectFromAgent : connectToAgent}
+              disabled={isConnecting}
+            >
+              <Phone className="mr-2" />
+              {isConnecting ? "Conectando..." : isConnected ? "Colgar" : "Iniciar llamada"}
+            </Button>
+          </div>
+        </div>
+        
         {/* Action buttons - 2x2 grid */}
         <div className="grid grid-cols-2 gap-4 w-full">
           <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
