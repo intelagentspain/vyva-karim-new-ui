@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { Button } from "@/components/ui/button";
@@ -123,8 +122,8 @@ const Index = () => {
     <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
       {/* Header with logo and image */}
       <div className="w-full flex justify-between items-start mb-6">
-        <img src="/lovable-uploads/8857d91b-c600-4c5a-b1cf-a105eaf9905a.png" alt="Diputación de Zamora" className="h-16 object-contain" />
         <img src="/lovable-uploads/5d56e02d-e530-46ec-8f53-f13aa6cd6114.png" alt="VYVA" className="h-16 object-contain" />
+        <img src="/lovable-uploads/8857d91b-c600-4c5a-b1cf-a105eaf9905a.png" alt="Diputación de Zamora" className="h-16 object-contain" />
       </div>
       
       <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-6">
@@ -171,12 +170,16 @@ const Index = () => {
           <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
             <span className="text-sm sm:text-base">Controlar mis síntomas</span>
           </Button>
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
-            <span className="text-sm sm:text-base">Consulte a un médico ahora</span>
-          </Button>
-          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
-            <span className="text-sm sm:text-base">Revise mis signos vitales</span>
-          </Button>
+          <a href="https://traveldoctores.doxy.me/zamora" target="_blank" rel="noopener noreferrer" className="w-full">
+            <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6 w-full">
+              <span className="text-sm sm:text-base">Consulte a un médico ahora</span>
+            </Button>
+          </a>
+          <a href="https://demo.shen.ai/" target="_blank" rel="noopener noreferrer" className="w-full">
+            <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6 w-full">
+              <span className="text-sm sm:text-base">Revise mis signos vitales</span>
+            </Button>
+          </a>
           <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
             <span className="text-sm sm:text-base">Juega un juego mental</span>
           </Button>
