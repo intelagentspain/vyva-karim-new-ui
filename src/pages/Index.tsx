@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Phone } from "lucide-react";
+import { Phone, Mic, MicOff } from "lucide-react";
 
 const Index = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -13,20 +13,37 @@ const Index = () => {
   const [audioQueue, setAudioQueue] = useState<Uint8Array[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [micPermission, setMicPermission] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
   
   const audioSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const processorRef = useRef<ScriptProcessorNode | null>(null);
   
   const apiKey = "sk_c33c3c6300c6d170509ba72d34381ae579fc73df654fc16f";
   const agentId = "RyloaiqsF04O4XPLfna0";
   
   useEffect(() => {
     return () => {
-      // Cleanup websocket connection when component unmounts
+      // Cleanup websocket connection and audio resources when component unmounts
       if (wsConnection) {
         wsConnection.close();
       }
+      
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      
+      if (processorRef.current && audioContext) {
+        processorRef.current.disconnect();
+      }
+      
+      if (audioContext) {
+        audioContext.close();
+      }
     };
-  }, [wsConnection]);
+  }, [wsConnection, audioContext]);
   
   useEffect(() => {
     if (audioQueue.length > 0 && !isPlaying && audioContext) {
@@ -34,9 +51,77 @@ const Index = () => {
     }
   }, [audioQueue, isPlaying]);
 
+  const requestMicrophonePermission = async (): Promise<boolean> => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Store the stream for later use
+      streamRef.current = stream;
+      setMicPermission(true);
+      toast({
+        title: "Micrófono activado",
+        description: "Permiso de micrófono concedido",
+      });
+      return true;
+    } catch (error) {
+      console.error("Error accessing microphone:", error);
+      toast({
+        title: "Error de micrófono",
+        description: "No se pudo acceder al micrófono",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  const setupAudioProcessing = (ws: WebSocket) => {
+    if (!audioContext || !streamRef.current) return;
+    
+    // Create microphone input source
+    const micSource = audioContext.createMediaStreamSource(streamRef.current);
+    
+    // Create a script processor node for processing audio data
+    const processor = audioContext.createScriptProcessor(4096, 1, 1);
+    processorRef.current = processor;
+    
+    // Process audio data
+    processor.onaudioprocess = (e) => {
+      if (!isConnected || isMuted) return;
+      
+      const inputData = e.inputBuffer.getChannelData(0);
+      
+      // Convert float32 audio data to int16
+      const pcmData = new Int16Array(inputData.length);
+      for (let i = 0; i < inputData.length; i++) {
+        pcmData[i] = Math.min(1, Math.max(-1, inputData[i])) * 0x7fff;
+      }
+      
+      // Send audio data as binary message
+      if (ws.readyState === WebSocket.OPEN) {
+        // Create a message object for audio data
+        const message = {
+          type: "audio",
+          data: Array.from(pcmData)
+        };
+        
+        ws.send(JSON.stringify(message));
+      }
+    };
+    
+    // Connect the audio nodes
+    micSource.connect(processor);
+    processor.connect(audioContext.destination);
+  };
+  
   const connectToAgent = async () => {
     try {
       setIsConnecting(true);
+      
+      // First request microphone permission
+      const permissionGranted = await requestMicrophonePermission();
+      if (!permissionGranted) {
+        setIsConnecting(false);
+        return;
+      }
       
       // Create audio context if not already created
       if (!audioContext) {
@@ -66,6 +151,17 @@ const Index = () => {
       ws.onopen = () => {
         setIsConnected(true);
         setIsConnecting(false);
+        
+        // Initialize the conversation
+        const initMessage = {
+          type: "init",
+          sample_rate: 16000  // Standard sample rate for voice recognition
+        };
+        ws.send(JSON.stringify(initMessage));
+        
+        // Setup audio processing after connection is established
+        setupAudioProcessing(ws);
+        
         toast({
           title: "Conectado",
           description: "Conexión establecida con el agente",
@@ -82,6 +178,13 @@ const Index = () => {
         } else if (message.type === "message") {
           // Handle text message
           console.log("Agent message:", message.data);
+        } else if (message.type === "error") {
+          console.error("WebSocket error message:", message.data);
+          toast({
+            title: "Error de comunicación",
+            description: message.data,
+            variant: "destructive",
+          });
         }
       };
       
@@ -99,6 +202,11 @@ const Index = () => {
       ws.onclose = () => {
         setIsConnected(false);
         setIsConnecting(false);
+        // Stop the microphone stream when the connection closes
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop());
+        }
+        setMicPermission(false);
       };
       
       setWsConnection(ws);
@@ -118,10 +226,32 @@ const Index = () => {
       wsConnection.close();
       setWsConnection(null);
       setIsConnected(false);
+      
+      // Stop the microphone stream
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      setMicPermission(false);
+      
       toast({
         title: "Desconectado",
         description: "Conexión cerrada con el agente",
       });
+    }
+  };
+
+  const toggleMicrophone = () => {
+    if (streamRef.current) {
+      const audioTrack = streamRef.current.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = isMuted;
+        setIsMuted(!isMuted);
+        
+        toast({
+          title: isMuted ? "Micrófono activado" : "Micrófono desactivado",
+          description: isMuted ? "Ahora puedes hablar" : "Ya no te escuchan",
+        });
+      }
     }
   };
 
@@ -153,6 +283,19 @@ const Index = () => {
     }
   };
 
+  const sendTextMessage = () => {
+    if (!wsConnection || !inputMessage.trim()) return;
+    
+    // Create a message object for text input
+    const message = {
+      type: "text",
+      data: inputMessage
+    };
+    
+    wsConnection.send(JSON.stringify(message));
+    setInputMessage("");
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
       {/* Header with logo and image */}
@@ -181,6 +324,19 @@ const Index = () => {
           </div>
         </div>
         
+        {/* Mic toggle button (only shows when connected) */}
+        {isConnected && (
+          <div className="w-full flex justify-center mb-2">
+            <Button 
+              className={`border-2 border-white text-white rounded-full p-2 w-12 h-12 flex items-center justify-center
+                ${isMuted ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
+              onClick={toggleMicrophone}
+            >
+              {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
+            </Button>
+          </div>
+        )}
+        
         {/* Action buttons - 2x2 grid */}
         <div className="grid grid-cols-2 gap-4 w-full">
           <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
@@ -207,7 +363,8 @@ const Index = () => {
           />
           <Button 
             className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] mt-2" 
-            disabled={true}
+            disabled={!isConnected || !inputMessage.trim()}
+            onClick={sendTextMessage}
           >
             Enviar
           </Button>
