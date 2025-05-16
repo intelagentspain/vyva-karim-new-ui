@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { Button } from "@/components/ui/button";
@@ -122,7 +123,7 @@ const Index = () => {
     <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
       {/* Header with logo and image */}
       <div className="w-full flex justify-between items-start mb-6">
-        <img src="/placeholder.svg" alt="Left Image" className="h-16" />
+        <img src="/lovable-uploads/8857d91b-c600-4c5a-b1cf-a105eaf9905a.png" alt="Diputación de Zamora" className="h-16" />
         <img src="/logo.png" alt="Logo" className="h-16" />
       </div>
       
