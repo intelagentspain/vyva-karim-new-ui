@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -153,41 +153,65 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-50 p-4">
-      <div className="w-full max-w-md flex flex-col items-center gap-6 mt-8">
-        <img src="/logo.png" alt="Logo" className="h-24 mb-4" />
-        
+    <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
+      {/* Header with logo and image */}
+      <div className="w-full flex justify-between items-start mb-6">
+        <img src="/placeholder.svg" alt="Left Image" className="h-16" />
+        <img src="/logo.png" alt="Logo" className="h-16" />
+      </div>
+      
+      {/* Welcome heading */}
+      <div className="text-center text-white mb-8">
+        <h1 className="text-2xl font-bold">¡Hola!</h1>
+        <p className="text-xl">¿Cómo puedo ayudarte hoy?</p>
+      </div>
+      
+      <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6">
         {/* Call button */}
         <Button 
-          className={`w-full ${isConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'} text-white py-4 rounded-lg text-lg font-medium`}
+          className={`w-full border-2 border-white text-white py-4 rounded-lg text-lg font-medium
+            ${isConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-[#3B5B43] hover:bg-[#2a4331]'}`}
           onClick={isConnected ? disconnectFromAgent : connectToAgent}
           disabled={isConnecting}
         >
-          {isConnecting ? "Conectando..." : isConnected ? "Colgar" : "Llamar"}
+          {isConnecting ? "Conectando..." : isConnected ? "Colgar" : "Iniciar llamada"}
         </Button>
         
         {/* Action buttons - 2x2 grid */}
         <div className="grid grid-cols-2 gap-4 w-full">
-          <Button className="bg-green-500 hover:bg-green-600 text-white">Opción 1</Button>
-          <Button className="bg-green-500 hover:bg-green-600 text-white">Opción 2</Button>
-          <Button className="bg-green-500 hover:bg-green-600 text-white">Opción 3</Button>
-          <Button className="bg-green-500 hover:bg-green-600 text-white">Opción 4</Button>
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
+            Controlar mis síntomas
+          </Button>
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
+            Consulte a un médico ahora
+          </Button>
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
+            Revise mis signos vitales
+          </Button>
+          <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331]">
+            Juega un juego mental
+          </Button>
         </div>
         
         {/* Text input and send button */}
-        <div className="flex w-full gap-2 mt-4">
-          <Input 
+        <div className="flex flex-col w-full gap-2 mt-4">
+          <Textarea 
             placeholder="Escribe tu mensaje..." 
-            className="flex-grow"
+            className="bg-[#3B5B43] border-2 border-white text-white min-h-[120px]"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
           />
           <Button 
-            className="bg-green-500 hover:bg-green-600 text-white" 
+            className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] mt-2" 
             disabled={true}
           >
             Enviar
           </Button>
+        </div>
+        
+        {/* Bottom image */}
+        <div className="w-full flex justify-center mt-6">
+          <img src="/placeholder.svg" alt="Bottom Image" className="h-24" />
         </div>
       </div>
     </div>
