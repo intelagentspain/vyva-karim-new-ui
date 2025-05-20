@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { Button } from "@/components/ui/button";
@@ -203,9 +202,11 @@ const Index = () => {
           </Button>
         </div>
         
-        {/* Bottom image */}
+        {/* Bottom image with reduced size and email link */}
         <div className="w-full flex justify-center mt-6">
-          <img src="/lovable-uploads/5d56e02d-e530-46ec-8f53-f13aa6cd6114.png" alt="Powered by VYVA" className="h-24 object-contain" />
+          <a href="mailto:hola@mokadigital.net">
+            <img src="/lovable-uploads/5d56e02d-e530-46ec-8f53-f13aa6cd6114.png" alt="Powered by VYVA" className="h-16 object-contain" />
+          </a>
         </div>
       </div>
     </div>
