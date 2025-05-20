@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,7 @@ const Index = () => {
     try {
       if (!sessionStarted) {
         await conversation.startSession({
-          agentId: "oNEWbnZcCxKoQW7FDrIg",
+          agentId: "RyloaiqsF04O4XPLfna0",
         });
         setSessionStarted(true);
         toast({
@@ -134,7 +135,7 @@ const Index = () => {
           </div>
           <div className="w-full md:w-[30%] md:pl-4">
             <Button 
-              className={`w-full border-2 border-white text-white py-4 px-2 rounded-lg text-lg font-medium flex items-center justify-center
+              className={`w-full border-2 border-white text-white py-6 px-4 rounded-lg text-lg font-medium flex items-center justify-center
                 ${sessionStarted ? 'bg-red-500 hover:bg-red-600' : 'bg-[#F5AA1F] hover:bg-[#e09d1d]'}`}
               onClick={toggleConversation}
               disabled={conversation.status === "connecting"}
