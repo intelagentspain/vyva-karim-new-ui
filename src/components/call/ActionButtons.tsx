@@ -8,7 +8,7 @@ export const ActionButtons = () => {
       <a href="https://traveldoctores.doxy.me/zamora" target="_blank" rel="noopener noreferrer" className="w-full">
         <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-2 p-2">
           <div className="w-4/5 h-4/5 flex items-center justify-center">
-            <User className="w-full h-full" />
+            <User className="w-4/5 h-4/5" strokeWidth={1.5} />
           </div>
           <span className="text-sm font-medium">Habla con un Doctor</span>
         </Button>
@@ -16,14 +16,14 @@ export const ActionButtons = () => {
       
       <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-2 p-2">
         <div className="w-4/5 h-4/5 flex items-center justify-center">
-          <Pill className="w-full h-full" />
+          <Pill className="w-4/5 h-4/5" strokeWidth={1.5} />
         </div>
         <span className="text-sm font-medium">Mi Medicina</span>
       </Button>
       
       <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-2 p-2">
         <div className="w-4/5 h-4/5 flex items-center justify-center">
-          <Brain className="w-full h-full" />
+          <Brain className="w-4/5 h-4/5" strokeWidth={1.5} />
         </div>
         <span className="text-sm font-medium">Memoria y ánimo</span>
       </Button>
@@ -31,7 +31,7 @@ export const ActionButtons = () => {
       <a href="https://demo.shen.ai/" target="_blank" rel="noopener noreferrer" className="w-full">
         <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-2 p-2">
           <div className="w-4/5 h-4/5 flex items-center justify-center">
-            <Heart className="w-full h-full" />
+            <Heart className="w-4/5 h-4/5" strokeWidth={1.5} />
           </div>
           <span className="text-sm font-medium">Revisa mi salud</span>
         </Button>
