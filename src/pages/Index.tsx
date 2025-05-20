@@ -17,7 +17,7 @@ const Index = () => {
     try {
       if (!sessionStarted) {
         await conversation.startSession({
-          agentId: "oNEWbnZcCxKoQW7FDrIg",
+          agentId: "RyloaiqsF04O4XPLfna0",
         });
         setSessionStarted(true);
         toast({
