@@ -4,11 +4,9 @@ import { toast } from "@/hooks/use-toast";
 import { useElevenLabsConversation } from "@/hooks/useElevenLabsConversation";
 import { Header } from "@/components/call/Header";
 import { Footer } from "@/components/call/Footer";
-import { Welcome } from "@/components/call/Welcome";
+import { ActionButtons } from "@/components/call/ActionButtons";
 import { CallButton } from "@/components/call/CallButton";
 import { MicrophoneToggle } from "@/components/call/MicrophoneToggle";
-import { ActionButtons } from "@/components/call/ActionButtons";
-import { MessageInput } from "@/components/call/MessageInput";
 
 const Index = () => {
   const [sessionStarted, setSessionStarted] = useState(false);
@@ -63,20 +61,23 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#3B5B43] p-4 text-white">
+    <div className="flex flex-col min-h-screen bg-[#6B38A6] p-4 text-white">
       <Header />
       
-      <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-6">
-        {/* Welcome heading and call button in 70-30 layout */}
-        <div className="flex flex-col md:flex-row items-center mb-8 w-full">
-          <Welcome />
-          <div className="w-full md:w-[30%] md:pl-4">
-            <CallButton 
-              sessionStarted={sessionStarted}
-              connectionStatus={conversation.status}
-              onToggle={toggleConversation}
-            />
-          </div>
+      <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6 mt-4">
+        {/* Main heading */}
+        <h1 className="text-2xl font-bold text-[#F5AA1F] mb-2">¿Cómo puedo asistir?</h1>
+        
+        {/* Action buttons in grid */}
+        <ActionButtons />
+        
+        {/* Call button */}
+        <div className="w-full mt-4">
+          <CallButton 
+            sessionStarted={sessionStarted}
+            connectionStatus={conversation.status}
+            onToggle={toggleConversation}
+          />
         </div>
         
         {/* Mic toggle button (only shows when connected) */}
@@ -87,12 +88,6 @@ const Index = () => {
             isSpeaking={conversation.isSpeaking}
           />
         )}
-        
-        {/* Action buttons */}
-        <ActionButtons />
-        
-        {/* Text input and send button */}
-        <MessageInput sessionStarted={sessionStarted} />
         
         {/* Bottom image */}
         <Footer />

@@ -13,7 +13,7 @@ export const MicrophoneToggle = ({ isMuted, onToggle, isSpeaking }: MicrophoneTo
   return (
     <div className="w-full flex justify-center mb-2">
       <Button 
-        className={`border-2 border-white text-white rounded-full p-2 w-12 h-12 flex items-center justify-center
+        className={`border border-white/20 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center
           ${isMuted ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
         onClick={onToggle}
       >

@@ -12,13 +12,12 @@ interface CallButtonProps {
 export const CallButton = ({ sessionStarted, connectionStatus, onToggle }: CallButtonProps) => {
   return (
     <Button 
-      className={`w-full border-2 border-white text-white py-6 px-8 rounded-lg text-lg font-medium flex items-center justify-center
-        ${sessionStarted ? 'bg-red-500 hover:bg-red-600' : 'bg-[#F5AA1F] hover:bg-[#e09d1d]'}`}
+      className={`w-full py-4 px-10 rounded-full text-lg font-medium flex items-center justify-center
+        ${sessionStarted ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-[#F5AA1F] hover:bg-[#e09d1d] text-white'}`}
       onClick={onToggle}
       disabled={connectionStatus === "connecting"}
     >
-      <Phone className="mr-2" />
-      <span className="whitespace-nowrap">
+      <span className="uppercase font-bold">
         {connectionStatus === "connecting" ? "Conectando..." : sessionStarted ? "Colgar" : "Iniciar llamada"}
       </span>
     </Button>

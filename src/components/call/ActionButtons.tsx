@@ -1,25 +1,33 @@
 
 import { Button } from "@/components/ui/button";
+import { User, Pill, Brain, Heart } from "lucide-react";
 
 export const ActionButtons = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-      <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
-        <span className="text-sm sm:text-base">Controlar mis síntomas</span>
-      </Button>
+    <div className="grid grid-cols-2 gap-4 w-full">
       <a href="https://traveldoctores.doxy.me/zamora" target="_blank" rel="noopener noreferrer" className="w-full">
-        <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6 w-full">
-          <span className="text-sm sm:text-base">Consulte a un médico ahora</span>
+        <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-3 p-2">
+          <User size={32} />
+          <span className="text-sm font-medium">Habla con un Doctor</span>
         </Button>
       </a>
-      <a href="https://demo.shen.ai/" target="_blank" rel="noopener noreferrer" className="w-full">
-        <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6 w-full">
-          <span className="text-sm sm:text-base">Revise mis signos vitales</span>
-        </Button>
-      </a>
-      <Button className="bg-[#3B5B43] border-2 border-white text-white hover:bg-[#2a4331] px-2 py-6">
-        <span className="text-sm sm:text-base">Juega un juego mental</span>
+      
+      <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-3 p-2">
+        <Pill size={32} />
+        <span className="text-sm font-medium">Mi Medicina</span>
       </Button>
+      
+      <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-3 p-2">
+        <Brain size={32} />
+        <span className="text-sm font-medium">Memoria y ánimo</span>
+      </Button>
+      
+      <a href="https://demo.shen.ai/" target="_blank" rel="noopener noreferrer" className="w-full">
+        <Button className="bg-white hover:bg-white/90 text-[#6B38A6] rounded-xl h-32 w-full flex flex-col items-center justify-center gap-3 p-2">
+          <Heart size={32} />
+          <span className="text-sm font-medium">Revisa mi salud</span>
+        </Button>
+      </a>
     </div>
   );
 };
