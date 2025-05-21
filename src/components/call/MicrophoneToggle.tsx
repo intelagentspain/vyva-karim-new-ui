@@ -17,11 +17,11 @@ export const MicrophoneToggle = ({ isMuted, onToggle, isSpeaking }: MicrophoneTo
           ${isMuted ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
         onClick={onToggle}
       >
-        {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
+        {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
       </Button>
       
       {isSpeaking && (
-        <div className="ml-4 text-sm italic">
+        <div className="ml-4 text-base italic">
           El agente está hablando...
         </div>
       )}
