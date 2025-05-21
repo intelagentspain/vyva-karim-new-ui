@@ -12,7 +12,7 @@ interface CallButtonProps {
 export const CallButton = ({ sessionStarted, connectionStatus, onToggle }: CallButtonProps) => {
   return (
     <Button 
-      className={`w-full py-4 px-10 rounded-full text-xl font-medium flex items-center justify-center
+      className={`w-full py-4 px-10 rounded-full text-lg font-medium flex items-center justify-center
         ${sessionStarted ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-[#F5AA1F] hover:bg-[#e09d1d] text-white'}`}
       onClick={onToggle}
       disabled={connectionStatus === "connecting"}
