@@ -11,19 +11,39 @@ import { MicrophoneToggle } from "@/components/call/MicrophoneToggle";
 const Index = () => {
   const [sessionStarted, setSessionStarted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isRequestingMic, setIsRequestingMic] = useState(false);
   const conversation = useElevenLabsConversation();
 
   const toggleConversation = async () => {
     try {
       if (!sessionStarted) {
-        await conversation.startSession({
-          agentId: "RyloaiqsF04O4XPLfna0",
-        });
-        setSessionStarted(true);
-        toast({
-          title: "Iniciando conversación",
-          description: "Conectando con el agente...",
-        });
+        setIsRequestingMic(true);
+        
+        // Request microphone permission before starting session
+        try {
+          await navigator.mediaDevices.getUserMedia({ audio: true });
+          
+          // Now that we have permission, start the session
+          await conversation.startSession({
+            agentId: "RyloaiqsF04O4XPLfna0",
+          });
+          
+          setSessionStarted(true);
+          toast({
+            title: "Iniciando conversación",
+            description: "Conectando con el agente...",
+          });
+        } catch (micError) {
+          console.error("Microphone permission denied:", micError);
+          toast({
+            variant: "destructive",
+            title: "Permiso denegado",
+            description: "Se requiere acceso al micrófono para iniciar la conversación",
+            duration: 5000,
+          });
+        } finally {
+          setIsRequestingMic(false);
+        }
       } else {
         await conversation.endSession();
         setSessionStarted(false);
@@ -34,6 +54,7 @@ const Index = () => {
       }
     } catch (error) {
       console.error("Error toggling conversation:", error);
+      setIsRequestingMic(false);
       toast({
         variant: "destructive",
         title: "Error de conexión",
@@ -75,7 +96,7 @@ const Index = () => {
         <div className="w-full mt-4">
           <CallButton 
             sessionStarted={sessionStarted}
-            connectionStatus={conversation.status}
+            connectionStatus={isRequestingMic ? "connecting" : conversation.status}
             onToggle={toggleConversation}
           />
         </div>
