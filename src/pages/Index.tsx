@@ -17,7 +17,7 @@ const Index = () => {
     try {
       if (!sessionStarted) {
         await conversation.startSession({
-          agentId: "oNEWbnZcCxKoQW7FDrIg",
+          agentId: "RyloaiqsF04O4XPLfna0",
         });
         setSessionStarted(true);
         toast({
@@ -61,7 +61,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#6B38A6] p-4 text-white">
+    <div className="flex flex-col min-h-screen bg-[#642A97] p-4 text-white">
       <Header />
       
       <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6 mt-4">
