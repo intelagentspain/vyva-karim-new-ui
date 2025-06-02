@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { useNavigate } from "react-router-dom";
@@ -54,9 +55,9 @@ export const useElevenLabsConversation = () => {
             duration: 2000,
           });
           
-          // Redirect to external doctor URL after a short delay
+          // Redirect to external doctor URL in the same window after a short delay
           setTimeout(() => {
-            window.open('https://traveldoctores.doxy.me/zamora', '_blank', 'noopener,noreferrer');
+            window.location.href = 'https://traveldoctores.doxy.me/zamora';
           }, 1000);
           
           return "Redirigiendo a consulta médica";
