@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { useNavigate } from "react-router-dom";
@@ -8,40 +9,31 @@ export const useElevenLabsConversation = () => {
   
   const conversation = useConversation({
     clientTools: {
-      redirectUser: async ({ url, message }: { url: string; message?: string }) => {
-        console.log("Redirect requested:", { url, message });
+      "read-vitals": async ({ message }: { message?: string }) => {
+        console.log("Read vitals requested:", { message });
         
         try {
-          // Show toast message if provided
-          if (message) {
-            toast({
-              title: "Redirigiendo",
-              description: message,
-              duration: 2000,
-            });
-          }
+          toast({
+            title: "Revisando signos vitales",
+            description: message || "Redirigiendo a revisión de salud...",
+            duration: 2000,
+          });
           
-          // Small delay to show the toast
+          // Redirect to external vitals URL in the same window after a short delay
           setTimeout(() => {
-            // Check if it's an external URL
-            if (url.startsWith('http://') || url.startsWith('https://')) {
-              window.location.href = url;
-            } else {
-              // Internal navigation
-              navigate(url);
-            }
-          }, message ? 1000 : 0);
+            window.location.href = 'https://demo.shen.ai/';
+          }, 1000);
           
-          return "Redirección exitosa";
+          return "Redirigiendo a revisión de signos vitales";
         } catch (error) {
-          console.error("Error during redirect:", error);
+          console.error("Error during vitals redirect:", error);
           toast({
             variant: "destructive",
-            title: "Error de redirección",
-            description: "No se pudo completar la redirección",
+            title: "Error",
+            description: "No se pudo acceder a la revisión de signos vitales",
             duration: 3000,
           });
-          return "Error en la redirección";
+          return "Error al acceder a revisión de signos vitales";
         }
       },
       "see-doctor": async ({ message }: { message?: string }) => {
@@ -106,7 +98,7 @@ export const useElevenLabsConversation = () => {
     // Set API key
     if (typeof window !== "undefined") {
       // @ts-ignore
-      window.ELEVENLABS_API_KEY = "sk_3f6fcce03cdbd22e706c78e671ea7afb17d3a83d5f737372";
+      window.ELEVENLABS_API_KEY = "sk_06caed3d3cd30ebcfe2317c58a48eb9bcee50ea00ce33024";
     }
     
     // Clean up on unmount
