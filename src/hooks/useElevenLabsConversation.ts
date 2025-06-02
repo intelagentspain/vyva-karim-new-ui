@@ -80,7 +80,7 @@ export const useElevenLabsConversation = () => {
     // Set API key
     if (typeof window !== "undefined") {
       // @ts-ignore
-      window.ELEVENLABS_API_KEY = "sk_c33c3c6300c6d170509ba72d34381ae579fc73df654fc16f";
+      window.ELEVENLABS_API_KEY = "sk_3f6fcce03cdbd22e706c78e671ea7afb17d3a83d5f737372";
     }
     
     // Clean up on unmount
