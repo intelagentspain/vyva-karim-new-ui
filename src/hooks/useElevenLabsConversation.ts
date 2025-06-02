@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { useNavigate } from "react-router-dom";
@@ -26,7 +25,7 @@ export const useElevenLabsConversation = () => {
           setTimeout(() => {
             // Check if it's an external URL
             if (url.startsWith('http://') || url.startsWith('https://')) {
-              window.open(url, '_blank', 'noopener,noreferrer');
+              window.location.href = url;
             } else {
               // Internal navigation
               navigate(url);
