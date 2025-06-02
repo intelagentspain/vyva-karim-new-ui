@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useConversation } from '@11labs/react';
 import { useNavigate } from "react-router-dom";
@@ -43,6 +42,33 @@ export const useElevenLabsConversation = () => {
             duration: 3000,
           });
           return "Error en la redirección";
+        }
+      },
+      "see-doctor": async ({ message }: { message?: string }) => {
+        console.log("See doctor requested:", { message });
+        
+        try {
+          toast({
+            title: "Conectando con doctor",
+            description: message || "Redirigiendo a consulta médica...",
+            duration: 2000,
+          });
+          
+          // Redirect to medicine page after a short delay
+          setTimeout(() => {
+            navigate('/medicine');
+          }, 1000);
+          
+          return "Redirigiendo a consulta médica";
+        } catch (error) {
+          console.error("Error during doctor redirect:", error);
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "No se pudo conectar con el doctor",
+            duration: 3000,
+          });
+          return "Error al conectar con el doctor";
         }
       }
     },
