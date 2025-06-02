@@ -54,9 +54,9 @@ export const useElevenLabsConversation = () => {
             duration: 2000,
           });
           
-          // Redirect to medicine page after a short delay
+          // Redirect to external doctor URL after a short delay
           setTimeout(() => {
-            navigate('/medicine');
+            window.open('https://traveldoctores.doxy.me/zamora', '_blank', 'noopener,noreferrer');
           }, 1000);
           
           return "Redirigiendo a consulta médica";
@@ -70,7 +70,7 @@ export const useElevenLabsConversation = () => {
           });
           return "Error al conectar con el doctor";
         }
-      }
+      },
     },
     onConnect: () => {
       console.log("Connected to ElevenLabs");
